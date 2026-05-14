@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Cart from './pages/Cart'
 import Orders from './pages/Orders'
+import API_URL from './config'
 
 function Store({ cart, setCart }) {
   const [products, setProducts] = useState([])
@@ -12,7 +13,7 @@ function Store({ cart, setCart }) {
   const username = localStorage.getItem('username')
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/products/')
+    axios.get(`${API_URL}/api/products/`)
       .then(res => setProducts(res.data))
   }, [])
 
@@ -40,7 +41,6 @@ function Store({ cart, setCart }) {
 
   return (
     <div style={{ padding: '20px' }}>
-      {/* Navbar */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h1>🛒 My E-commerce Store</h1>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
@@ -69,7 +69,6 @@ function Store({ cart, setCart }) {
         </div>
       </div>
 
-      {/* Products Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
         {products.map(product => (
           <div key={product.id} style={{

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import API_URL from '../config'
 
 function Orders() {
   const [orders, setOrders] = useState([])
@@ -13,7 +14,7 @@ function Orders() {
       navigate('/login')
       return
     }
-    axios.get('http://127.0.0.1:8000/api/orders/', {
+    axios.get(`${API_URL}/api/orders/`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(res => {
@@ -50,7 +51,6 @@ function Orders() {
             border: '1px solid #ccc', borderRadius: '10px',
             padding: '20px', marginBottom: '20px'
           }}>
-            {/* Order Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
               <h3>Order #{order.id}</h3>
               <span style={{
@@ -68,7 +68,6 @@ function Orders() {
               })}
             </p>
 
-            {/* Order Items */}
             {order.items.map(item => (
               <div key={item.id} style={{
                 display: 'flex', justifyContent: 'space-between',
@@ -79,7 +78,6 @@ function Orders() {
               </div>
             ))}
 
-            {/* Order Total */}
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
               <strong>Total</strong>
               <strong>₹{parseFloat(order.total_price).toFixed(2)}</strong>

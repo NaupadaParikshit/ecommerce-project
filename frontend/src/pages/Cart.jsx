@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useState } from 'react'
+import API_URL from '../config'
 
 function Cart({ cart, removeFromCart, clearCart }) {
   const navigate = useNavigate()
@@ -16,16 +17,14 @@ function Cart({ cart, removeFromCart, clearCart }) {
 
     setOrdering(true)
     try {
-      // Step 1 — Create order in Django
       const res = await axios.post(
-        'http://127.0.0.1:8000/api/orders/create/',
+        `${API_URL}/api/orders/create/`,
         { items: cart },
         { headers: { Authorization: `Bearer ${token}` } }
       )
 
       const { order_id, razorpay_order_id, amount, currency, key } = res.data
 
-      // Step 2 — Open Razorpay payment popup
       const options = {
         key: key,
         amount: amount,
@@ -34,11 +33,10 @@ function Cart({ cart, removeFromCart, clearCart }) {
         description: 'Order Payment',
         order_id: razorpay_order_id,
 
-        // Step 3 — On payment success
         handler: async function (response) {
           try {
             await axios.post(
-              'http://127.0.0.1:8000/api/orders/verify/',
+              `${API_URL}/api/orders/verify/`,
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
@@ -61,7 +59,6 @@ function Cart({ cart, removeFromCart, clearCart }) {
         theme: { color: '#2196F3' }
       }
 
-      // Open Razorpay popup
       const rzp = new window.Razorpay(options)
       rzp.open()
 
@@ -114,7 +111,6 @@ function Cart({ cart, removeFromCart, clearCart }) {
             </div>
           ))}
 
-          {/* Total & Checkout */}
           <div style={{
             borderTop: '2px solid #ccc', marginTop: '20px', paddingTop: '20px',
             display: 'flex', justifyContent: 'space-between', alignItems: 'center'
