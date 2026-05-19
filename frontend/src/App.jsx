@@ -4,7 +4,6 @@ import axios from 'axios'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Cart from './pages/Cart'
-import Orders from './pages/Orders'
 import Events from './pages/Events'
 import EventDetail from './pages/EventDetail'
 import MyBookings from './pages/MyBookings'
@@ -63,10 +62,6 @@ function Store({ cart, setCart }) {
                 style={{ padding: '8px 16px', background: '#00BCD4', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
                 🎫 My Bookings
               </button>
-              <button onClick={() => navigate('/orders')}
-                style={{ padding: '8px 16px', background: '#FF9800', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-                📦 My Orders
-              </button>
               <button onClick={() => navigate('/cart')}
                 style={{ padding: '8px 16px', background: '#2196F3', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
                 🛒 Cart ({cartCount})
@@ -122,7 +117,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Store cart={cart} setCart={setCart} />} />
         <Route path="/cart" element={<Cart cart={cart} removeFromCart={removeFromCart} clearCart={clearCart} />} />
-        <Route path="/orders" element={<Orders />} />
         <Route path="/events" element={<Events />} />
         <Route path="/events/:id" element={<EventDetail />} />
         <Route path="/my-bookings" element={<MyBookings />} />
