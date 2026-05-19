@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class EventCategory(models.Model):
-    name = models.CharField(max_length=100)  # "Movie", "IPL"
+    name = models.CharField(max_length=100)
     icon = models.CharField(max_length=10, default='🎟️')
 
     def __str__(self):
@@ -24,7 +24,7 @@ class Event(models.Model):
 
 
 class SeatCategory(models.Model):
-    name = models.CharField(max_length=50)   # "Platinum", "Gold", "Silver"
+    name = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     color = models.CharField(max_length=20, default='#4CAF50')
 
@@ -34,8 +34,8 @@ class SeatCategory(models.Model):
 
 class Seat(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='seats')
-    seat_number = models.CharField(max_length=10)   # "A1", "B5"
-    row = models.CharField(max_length=5)             # "A", "B"
+    seat_number = models.CharField(max_length=10)
+    row = models.CharField(max_length=5)
     seat_category = models.ForeignKey(SeatCategory, on_delete=models.CASCADE)
     is_booked = models.BooleanField(default=False)
 
